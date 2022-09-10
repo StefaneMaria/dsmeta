@@ -2,12 +2,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Sale } from "../../models/sale";
 import { BASE_URL } from "../../utils/request";
+import { Sale } from "../models/sale";
 import NotificationButton from '../NotificationButton';
 import './styles.css';
 
 function SalesCard() {
+
+    const formCurrency = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2
+    })
 
     const min = new Date(new Date().setDate(new Date().getDate() - 365));
     const max = new Date();
@@ -73,7 +79,7 @@ function SalesCard() {
                                         <td>{sale.sellerName}</td>
                                         <td className="show992">{sale.visited}</td>
                                         <td className="show992">{sale.deals}</td>
-                                        <td>R$ {sale.amount.toFixed(2)}</td>
+                                        <td>{formCurrency.format(sale.amount) }</td>
                                         <td>
                                             <div className="dsmeta-red-btn-container">
                                                 <NotificationButton saleId={sale.id} />
